@@ -1,9 +1,9 @@
-import Button from "./components/Button";
+import Button from "./components/Button/Button";
 import Alert from "./components/Alert";
 import { useState } from "react";
  
 function App() {
-  const color = "danger";
+  const color = "primary";
   const [alertVisible, setAlertVisibility] = useState(false);
 
   return (
@@ -15,6 +15,5 @@ function App() {
     </div>
     );
 }
-
 
 export default App;
