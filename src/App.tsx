@@ -1,17 +1,18 @@
-import Button from "./components/Button";
-import Alert from "./components/Alert";
 import { useState } from "react";
+import Like from "./components/like"
  
 function App() {
-  const color = "danger";
-  const [alertVisible, setAlertVisibility] = useState(false);
+  const [size, setSize] = useState(10);
+
+  const handleClick = () => {
+    setSize(size + 4);
+  }
 
   return (
     <div>
-      { alertVisible && <Alert onClose={() => setAlertVisibility(false)}>MyAlert</Alert> }
-      <Button color={color} onClick={() => setAlertVisibility(true)}>
-        MyButton
-      </Button>
+      <Like style={{fontSize: size}} onClick={handleClick }>
+
+      </Like>
     </div>
     );
 }
