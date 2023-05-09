@@ -3,7 +3,7 @@ import Alert from "./components/Alert";
 import { useState } from "react";
  
 function App() {
-  const color = "primary";
+  const color = "danger";
   const [alertVisible, setAlertVisibility] = useState(false);
 
   return (
