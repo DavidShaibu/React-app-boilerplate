@@ -1,5 +1,5 @@
 import Button from "./components/Button/Button";
-import Alert from "./components/Alert";
+import Like from "./components/Like/Like"
 import { useState } from "react";
  
 function App() {
@@ -8,10 +8,7 @@ function App() {
 
   return (
     <div>
-      { alertVisible && <Alert onClose={() => setAlertVisibility(false)}>MyAlert</Alert> }
-      <Button color={color} onClick={() => setAlertVisibility(true)}>
-        MyButton
-      </Button>
+      <Like onClick={() => console.log("Clicked")}/>
     </div>
     );
 }
