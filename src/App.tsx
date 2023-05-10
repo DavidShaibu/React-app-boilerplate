@@ -1,18 +1,10 @@
 import { useState } from "react";
-import Like from "./components/like"
+import Like from "./components/Like/Like"
  
 function App() {
-  const [size, setSize] = useState(10);
-
-  const handleClick = () => {
-    setSize(size + 4);
-  }
-
   return (
     <div>
-      <Like style={{fontSize: size}} onClick={handleClick }>
-
-      </Like>
+      <Like onClick={ () => console.log("clicked") } />
     </div>
     );
 }
