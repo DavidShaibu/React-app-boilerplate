@@ -1,16 +1,23 @@
-import Button from "./components/Button/Button";
-import Like from "./components/Like/Like"
 import { useState } from "react";
+import Button from "./components/Button/Button";
+
  
 function App() {
-  const color = "primary";
-  const [alertVisible, setAlertVisibility] = useState(false);
+  const [drink, setDrink] = useState({
+    title: "Americano",
+    price: 5
+  })
+  const handleClick = () => {
+    setDrink({...drink, price: 6});
+  };
 
   return (
     <div>
-      <Like onClick={() => console.log("Clicked")}/>
+      {drink.price}
+      <Button onClick={handleClick}/>
     </div>
     );
 }
 
 export default App;
+
