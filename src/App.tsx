@@ -3,23 +3,26 @@ import Button from "./components/Button/Button";
 
  
 function App() {
-  const [ tags, setTags ] = useState(["happy", "cheerful"]);
+  const [ bugs, setBugs ] = useState([
+    {  id: 1, title: "Bug 1", fixed: false },
+    { id: 2, title: "Bug 2", fixed: false },
+  ]);
 
   const handleClick = () => {
 
     //Add
-    setTags([ ...tags, "exciting" ]);
+    // setBugs([ ...bugs, "exciting" ]);
 
     //Remove
-    setTags(tags.filter(tag => tag !== "happy"));
+    // setBugs(bugs.filter(tag => tag !== "happy"));
 
     //Update
-    setTags(tags.map(tag => tag === "happy" ? "happiness": tag));
+    setBugs(bugs.map( bug => bug.id === 1 ? { ...bug, fixed: true }: bug));
 
 
   };
-  
-  { console.log(tags) }
+
+  { console.log(bugs) }
 
   return (
     <div>
