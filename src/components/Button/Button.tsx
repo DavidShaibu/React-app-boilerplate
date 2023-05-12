@@ -4,9 +4,9 @@ interface Props {
     onClick: () => void;
 }
 
-const Button = ({ onClick}: Props) => {
+const Button = ({onClick}: Props) => {
   return (
-    <button type="button" className="btn btn-primary" onClick={onClick}>MyButton</button>
+    <button type="button" className={[styles.btn, styles["btn-primary"]].join(" ")} onClick={onClick}>My Button</button>
   )
 }
 
