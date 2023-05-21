@@ -1,16 +1,13 @@
 import { useState } from "react";
 import ExpenseTable from "./ExpenseTable/ExpenseTable";
+import Form from "./Form/form";
 
  
 function App() {
-  const [cartItem, setCartItem] = useState(["Product 1", "Product 2", "Product 3", "Product 4"]);
-
-  const handleClick = () => {
-  setCartItem([]);
-  };
 
   return (
     <>
+      <Form />
       <ExpenseTable data={[]}/>
     </>
     );
