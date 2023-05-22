@@ -1,29 +1,43 @@
-import { FormEvent, useRef, useState } from "react";
+import React, { FormEvent, useRef, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const schema = z.object({
   item: z.string().min(3, {message: "Name must be at least 3 characters"}),
-  amount: z.number({ invalid_type_error: "Age field is required" }).min(0),
-  category: z.string().min(1)
+  amount: z.number({ invalid_type_error: "Amount field is required" }).min(0),
+  category: z.enum(["Groceries", "Entertainment", "Utilities"])
 });
 
 type FormData = z.infer<typeof schema>;
 
-const form = () => {
+interface Props {
+    dataArray: ExpenseItem[],
+    setDataArray: React.Dispatch<React.SetStateAction<ExpenseItem[]>>,
+    onSubmit: (data: FieldValues) => void;
+}
+
+interface ExpenseItem {
+    id: number;
+    item: string;
+    amount: number;
+    category: string;
+  }
+
+const form = ({ dataArray, setDataArray, onSubmit } : Props) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isValid },
   } = useForm<FormData>({resolver: zodResolver(schema)});
-
-  const onSubmit = (data: FieldValues) => {
-    console.log(data);
-  };
+  
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(data => {
+        onSubmit(data);
+        reset();
+    })}>
       <div className="mb-3">
         <label htmlFor="item" className="form-label">
           Name
@@ -56,10 +70,12 @@ const form = () => {
         <label htmlFor="category" className="form-label">
           Category
         </label>
-        <input {...register("category")} id="category" type="text" className="form-control" />
-        {errors.category && (
-          <p className="text-danger">{errors.category.message}</p>
-        )}
+        <select {...register("category")} className="form-select" id="category">
+            <option value=""></option>
+            <option value="Groceries">Groceries</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Utilities">Utilities</option>
+        </select>
       </div>
       <button disabled={!isValid} type="submit" className="btn btn-primary">
         Submit
