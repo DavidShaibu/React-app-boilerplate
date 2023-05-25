@@ -1,37 +1,31 @@
 import { useState } from "react";
-import { FieldValues, useForm } from "react-hook-form";
-import ExpenseTable from "./ExpenseTable/ExpenseTable";
-import Form from "./Form/form";
+import ExpenseFilter from "./expense-tracker/components/ExpenseFilter";
+import ExpenseForm from "./expense-tracker/components/ExpenseForm";
+import ExpenseList from "./expense-tracker/components/ExpenseList";
+import categories from "./expense-tracker/categories";
 
-interface ExpenseItem {
-  id: number;
-  item: string;
-  amount: number;
-  category: string;
-}
- 
 function App() {
-  const handleDelete = (id: number) => {
-    setDataArray(prevData => prevData.filter((item) => (item as ExpenseItem).id !== id));
-  }
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [expenses, setExpenses] = useState([
+    {id:1, description: "aaa", amount:10, category: "Utilities"},
+    {id:2, description: "bbb", amount:10, category: "Utilities"},
+    {id:3, description: "ccc", amount:10, category: "Utilities"},
+    {id:4, description: "ddd", amount:10, category: "Utilities"},
+  ]);
 
-  const [dataArray, setDataArray] = useState<ExpenseItem[]>([{ id: 1, item: "Milk", amount: 5.00, category: 'Groceries'}]);
+  if (expenses.length === 0) return null;
 
-  const [id, setID] = useState(2);
+  const visibleExpenses = selectedCategory ? expenses.filter(expense => expense.category === selectedCategory) : expenses;
 
-  const handleSubmit = (data: FieldValues ) => {
-      const updatedDataArray = [...dataArray];
-      data.id = id;
-      updatedDataArray.push(data as ExpenseItem);
-      setDataArray(updatedDataArray);
-      setID(prevID => prevID +1);
-      console.log(dataArray);
-  
-    };
   return (
     <>
-      <Form onSubmit={handleSubmit} dataArray={dataArray} setDataArray={setDataArray }/>
-      <ExpenseTable onDelete={handleDelete} dataArray={dataArray} setDataArray={setDataArray}/>
+      <div className="mb-3">
+        <ExpenseForm onSubmit={(expense) => setExpenses([...expenses, {...expense, id: expenses.length + 1}])}/>
+      </div>
+      <div className="mb-3">
+        <ExpenseFilter onSelectCategory={(category) => setSelectedCategory(category)}/>
+      </div>
+      <ExpenseList expenses={visibleExpenses} onDelete={(id) => setExpenses(expenses.filter(expense => expense.id !== id))}/>
     </>
     );
 
